@@ -58,7 +58,11 @@ public class CommentService {
         if(!memoService.getNickname().equals(memo.getMemberName())) {
             throw new IllegalArgumentException("작성자만 삭제할 수 있습니다.");
         }
+
+        List<Comment> commentList = memo.getCommentList();
+
         memo.deleteComment(comment);
+        commentRepository.delete(comment);
         return true;
 
     }

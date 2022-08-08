@@ -44,14 +44,16 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String memberName;
 
+    @Column
+    private Long cntHeart;
+
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "MEMO_ID", nullable = false)
     private Memo memo;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)  //부모가 삭제될 때 자식들도 다 삭제되는 어노테이션
-    @JsonManagedReference //DB연관관계 무한회귀 방지
+    @OneToMany(mappedBy = "comment" , cascade = CascadeType.ALL, orphanRemoval = true)  //부모가 삭제될 때 자식들도 다 삭제되는 어노테이션
     private List<Heart> heartList;
 
 //    @Builder
@@ -75,19 +77,15 @@ public class Comment extends Timestamped {
         this.memberName = memberName;
     }
 
-//    public void setHeartCnt(Long heartCnt) {
-//        this.heartCnt = heartCnt;
-//    }
 
-    //    public void addHeart(Heart heart) {
-////        this.heartList.add(heart);
-//
-//
-//    }
-//
-//    public void deleteHeart(Heart heart){
-//        this.heartList.remove(heart);
-//    }
+    public void addHeart(Heart heart) {
+        this.heartList.add(heart);
+    }
+
+    public void deleteHeart(Heart heart) {
+        this.heartList.remove(heart);
+    }
+
     public void setComment(CommentRequestDto commentRequestDto) {
         this.content = commentRequestDto.getContent();
     }

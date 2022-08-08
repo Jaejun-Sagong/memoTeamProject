@@ -46,15 +46,15 @@ jwt:
 cloud:
   aws:
     s3:
-      bucket: 1234
+      bucket:
     region:
-      static: 1234
+      static:
     credentials:
       #            accessKey: 1234
       #            secretKey: 1234
 
-      accessKey: 1234
-      secretKey: 1234
+      accessKey:
+      secretKey:
 
     stack:
       auto =false:

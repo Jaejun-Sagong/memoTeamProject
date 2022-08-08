@@ -2,6 +2,8 @@ package com.sparta.memoproject.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -19,11 +21,13 @@ public class Heart {
     private String nickname;
 
     @JoinColumn(name = "memo_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action= OnDeleteAction.CASCADE)
     private Memo memo;
 
     @JoinColumn(name = "comment_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action= OnDeleteAction.CASCADE)
     private Comment comment;
 
 

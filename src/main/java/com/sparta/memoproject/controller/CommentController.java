@@ -19,8 +19,6 @@ public class CommentController {
     private final CommentService commentService;  // 필수적인 요소이기 때문에 final 선언
     private final CommentRepository commentRepository;
 
-
-
     @Secured("ROLE_USER")
     @PostMapping("/{id}")
     public Comment addComment(@PathVariable Long id, @RequestBody CommentRequestDto commentRequestDto) {

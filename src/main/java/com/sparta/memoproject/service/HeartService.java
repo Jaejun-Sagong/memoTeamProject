@@ -21,6 +21,14 @@ public class HeartService {
     private final MemoRepository memoRepository;
     private final CommentRepository commentRepository;
 
+
+    //사용자가 이미 좋아요 한 게시물인지 체크
+    public boolean isAlreadyHeartToMemo(String nickname, Memo memo) {
+        return heartRepository.findByNicknameAndMemo(nickname, memo).isPresent();
+    }//사용자가 이미 좋아요 한 댓글인지 체크
+    private boolean isAlreadyHeartToComment(String nickname, Comment comment) {
+        return heartRepository.findByNicknameAndComment(nickname, comment).isPresent();
+    }
     //게시글 좋아요
     @Transactional
     public Long addHeartToMemo(Long memoId) {
@@ -32,6 +40,7 @@ public class HeartService {
             heartRepository.delete(heartRepository.findByNicknameAndMemo(nickname, memo));
         } else {
             Heart heart = new Heart(nickname, memo);
+            memo.addHeart(heart);
             heartRepository.save(heart);
         }
         return heartRepository.countByMemo(memo);
@@ -44,8 +53,10 @@ public class HeartService {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글 존재하지 않습니다."));
 
-        if (!heartRepository.findByCommentAndNickname(comment, nickname).isEmpty()) {
-            heartRepository.delete(heartRepository.findByNicknameAndComment(nickname, comment));
+        if (isAlreadyHeartToComment(nickname, comment)) {
+            Heart heart = heartRepository.findByNicknameAndComment(nickname, comment).get();
+            comment.deleteHeart(heart);
+            heartRepository.delete(heart);
         } else{
             Heart heart = new Heart(nickname, comment);
             heartRepository.save(heart);
