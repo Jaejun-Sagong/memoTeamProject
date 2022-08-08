@@ -14,7 +14,7 @@ public class CommentController {
 
     private final CommentService commentService;  // 필수적인 요소이기 때문에 final 선언
 
-
+ㅋㅌㅊㅋㅌㅊㅌ
 
     @Secured("ROLE_USER")
     @PostMapping("/{id}")
