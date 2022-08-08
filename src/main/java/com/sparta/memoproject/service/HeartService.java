@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -36,8 +37,10 @@ public class HeartService {
         Memo memo = memoRepository.findById(memoId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
-        if (!heartRepository.findByMemoAndNickname(memo, nickname).isEmpty()) {
-            heartRepository.delete(heartRepository.findByNicknameAndMemo(nickname, memo));
+        if (isAlreadyHeartToMemo(nickname, memo)) {
+            Heart heart = heartRepository.findByNicknameAndMemo(nickname, memo).get();
+            memo.deleteHeart(heart);
+            heartRepository.delete(heart);
         } else {
             Heart heart = new Heart(nickname, memo);
             memo.addHeart(heart);
@@ -46,6 +49,8 @@ public class HeartService {
 
         return heartRepository.countByMemo(memo);
     }
+
+
     //댓글 좋아요
     @Transactional
     public Long addHeartToComment(Long commentId) {
@@ -60,6 +65,9 @@ public class HeartService {
             heartRepository.delete(heart);
         } else{
             Heart heart = new Heart(nickname, comment);
+
+            comment.addHeart(heart);
+
             heartRepository.save(heart);
         }
         return heartRepository.countByComment(comment);

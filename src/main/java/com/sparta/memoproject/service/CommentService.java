@@ -11,6 +11,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor //final로 선언한 변수가 있으면 꼭 생성해달라는 것
 @Service
