@@ -23,6 +23,7 @@ import java.util.Optional;
 public class AuthController {
     private final AuthService authService;
     private final MemberRepository memberRepository;
+    private final MemoRepository memoRepository;
 
 
 
