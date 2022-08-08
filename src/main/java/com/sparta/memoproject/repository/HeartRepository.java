@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface HeartRepository extends JpaRepository<Heart, Long> {
 
 
-    Heart findByNicknameAndMemo(String nickname, Memo memo);
+    Optional<Heart> findByNicknameAndMemo(String nickname, Memo memo);
 
     Long countByMemo(Memo memo);
 
-    Heart findByNicknameAndComment(String nickname, Comment comment);
+    Optional<Heart> findByNicknameAndComment(String nickname, Comment comment);
 
     Long countByComment(Comment comment);
 
@@ -29,4 +29,8 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     Collection<Object> findByCommentAndNickname(Comment comment, String nickname);
 
     Collection<Object> findByMemoAndNickname(Memo memo, String nickname);
+
+    void deleteByMemo(Memo memo);
+
+    void deleteByComment(Comment comment);
 }

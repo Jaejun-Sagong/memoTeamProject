@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    Long countByMemo(Memo memo);
 
     List<Comment> findAllByMemo(Memo memo);
 

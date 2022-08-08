@@ -120,6 +120,10 @@ public class MemoService {
     public MemoSoloDto readMemoSoloDto(Long Id) {
         Memo memo = memoRepository.findById(Id)
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 없습니다."));
+        List<Comment> commentList = commentRepository.findAllByMemo(memo);
+        for (Comment comment : commentList) {
+            comment.setCntHeart(Long.valueOf(comment.getHeartList().size()));
+        }
         MemoSoloDto memoSoloDto = new MemoSoloDto(memo);
         return memoSoloDto;
 

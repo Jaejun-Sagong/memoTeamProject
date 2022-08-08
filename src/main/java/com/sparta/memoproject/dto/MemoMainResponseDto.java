@@ -15,8 +15,6 @@ public class MemoMainResponseDto {
     private Long heartCnt;
     private Long commentCnt;
 
-
-
     public MemoMainResponseDto(Memo memo) {
         this.id = memo.getId();
         this.title = memo.getTitle();

@@ -43,6 +43,7 @@ public class HeartService {
             memo.addHeart(heart);
             heartRepository.save(heart);
         }
+
         return heartRepository.countByMemo(memo);
     }
     //댓글 좋아요
